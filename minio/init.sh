@@ -31,9 +31,10 @@ log_error() {
 
 # 스크립트 디렉토리 설정
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+STORAGE_DIR="/mnt/exthdd02/minio"
 MINIO_DIR="$SCRIPT_DIR"
 MINIO_BIN_DIR="$MINIO_DIR/bin"
-MINIO_DATA_DIR="$MINIO_DIR/data"
+MINIO_DATA_DIR="$STORAGE_DIR/data"
 MINIO_CONFIG_DIR="$MINIO_DIR/config"
 
 # 환경 변수 파일 경로
