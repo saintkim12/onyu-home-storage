@@ -46,11 +46,11 @@ source .env
 # 기본 버킷 생성
 echo "기본 버킷을 생성합니다..."
 
-# MinIO 클라이언트를 사용하여 버킷 생성
-# docker-compose에 mc 서비스가 없거나 사용할 수 없는 경우, minio/mc 이미지를 직접 docker run으로 실행합니다.
-# mc 명령어가 없거나 오류가 발생할 수 있으니, MinIO 서버가 완전히 실행된 후에 아래 명령을 실행해야 합니다.
-# 또한, 버킷이 이미 존재하면 오류가 발생하므로 || true를 붙여줍니다.
+# MinIO 도커 컨테이너를 docker-compose로 실행합니다...
+cd minio
+docker-compose up -d
 
+# MinIO 서버가 완전히 실행될 때까지 대기
 echo "MinIO 서버가 준비될 때까지 대기합니다..."
 until curl -sSf http://localhost:9000/minio/health/live > /dev/null; do
   sleep 2
@@ -78,3 +78,4 @@ mc ls minio
 echo "MinIO 초기 설정이 완료되었습니다!"
 echo "웹 콘솔: http://localhost:9001"
 echo "API 엔드포인트: http://localhost:9000" 
+cd ..
