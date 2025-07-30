@@ -28,6 +28,7 @@ cd "$STORAGE_DIR"
 
 ### [4] MinIO Docker 컨테이너 실행
 echo "🚀 Starting MinIO..."
+pwd
 cd minio
 
 echo "MinIO 초기 설정을 시작합니다..."
