@@ -1,8 +1,34 @@
-#!/bin/bash
-
-# MinIO 초기 설정 스크립트
-
+#!/bin/sh
 set -e
+
+GIT_USER=saintkim12
+GIT_REPO=onyu-home-storage
+GIT_BRANCH=main
+GIT_URL=https://github.com/${GIT_USER}/${GIT_REPO}.git
+STORAGE_DIR=/opt/setup/storage
+YOUR_SERVER_IP='<your-server-ip>'
+
+mkdir -p /opt/setup
+cd /opt/setup
+
+### [1] raspberry pi 패키지 및 Docker 설치
+# echo "📦 Installing Docker..."
+
+### [2] Git 저장소 클론
+echo "📥 Cloning Git repository..."
+if [ ! -d "$STORAGE_DIR" ]; then
+  git clone -b "$GIT_BRANCH" "$GIT_URL" "$STORAGE_DIR"
+else
+  echo "📦 Repo exists, pulling latest..."
+  cd "$STORAGE_DIR" && git pull && cd ..
+fi
+
+### [3] 메인 디렉토리로 이동
+cd "$STORAGE_DIR"
+
+### [4] MinIO Docker 컨테이너 실행
+echo "🚀 Starting MinIO..."
+cd minio
 
 echo "MinIO 초기 설정을 시작합니다..."
 
