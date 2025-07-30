@@ -24,7 +24,6 @@ else
 fi
 
 ### [3] 메인 디렉토리로 이동
-pwd
 cd "$STORAGE_DIR"
 
 ### [4] MinIO Docker 컨테이너 실행
@@ -48,7 +47,6 @@ source .env
 echo "기본 버킷을 생성합니다..."
 
 # MinIO 도커 컨테이너를 docker-compose로 실행합니다...
-cd minio
 docker-compose up -d
 
 # MinIO 서버가 완전히 실행될 때까지 대기
@@ -79,4 +77,3 @@ mc ls minio
 echo "MinIO 초기 설정이 완료되었습니다!"
 echo "웹 콘솔: http://localhost:9001"
 echo "API 엔드포인트: http://localhost:9000" 
-cd ..
