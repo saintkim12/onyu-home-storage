@@ -47,13 +47,30 @@ source .env
 echo "기본 버킷을 생성합니다..."
 
 # MinIO 클라이언트를 사용하여 버킷 생성
-docker-compose run --rm mc sh -c "
+# docker-compose에 mc 서비스가 없거나 사용할 수 없는 경우, minio/mc 이미지를 직접 docker run으로 실행합니다.
+# mc 명령어가 없거나 오류가 발생할 수 있으니, MinIO 서버가 완전히 실행된 후에 아래 명령을 실행해야 합니다.
+# 또한, 버킷이 이미 존재하면 오류가 발생하므로 || true를 붙여줍니다.
+
+echo "MinIO 서버가 준비될 때까지 대기합니다..."
+until curl -sSf http://localhost:9000/minio/health/live > /dev/null; do
+  sleep 2
+done
+
+echo "기본 버킷을 생성합니다..."
+
+docker run --rm \
+  --network minio_minio_network \
+  -e MINIO_ROOT_USER="$MINIO_ROOT_USER" \
+  -e MINIO_ROOT_PASSWORD="$MINIO_ROOT_PASSWORD" \
+  --entrypoint sh \
+  minio/mc:latest -c "
 mc alias set minio http://minio:9000 \$MINIO_ROOT_USER \$MINIO_ROOT_PASSWORD
-mc mb minio/backup
-mc mb minio/documents
-mc mb minio/media
-mc policy set download minio/backup
-mc policy set public minio/media
+mc ls minio || true
+mc mb minio/backup || true
+mc mb minio/documents || true
+mc mb minio/media || true
+mc policy set download minio/backup || true
+mc policy set public minio/media || true
 echo '기본 버킷이 생성되었습니다:'
 mc ls minio
 "

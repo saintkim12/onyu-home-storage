@@ -9,8 +9,10 @@ services:
     ports:
       - "9000:9000"      # API 포트
       - "9001:9001"      # Console 포트
+    # 추천 폴더 구조: /mnt/exthdd02/minio/data
+    # 필요시 /mnt/exthdd02/minio/{data,backup,documents,media} 등으로 세분화 가능
     volumes:
-      - minio_data:/data
+      - /mnt/exthdd02/minio/data:/data
     command: server /data --console-address ":9001"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
@@ -19,10 +21,6 @@ services:
       retries: 3
     networks:
       - minio_network
-
-volumes:
-  minio_data:
-    driver: local
 
 networks:
   minio_network:
