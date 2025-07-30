@@ -118,7 +118,7 @@ WorkingDirectory=$MINIO_DIR
 User=root
 Group=root
 EnvironmentFile=$ENV_FILE
-ExecStart=$MINIO_BIN_DIR/minio server \$MINIO_DATA_DIR --console-address ":\$MINIO_CONSOLE_PORT"
+ExecStart=$MINIO_BIN_DIR/minio server \$MINIO_DATA_DIR --console-address ":\${MINIO_CONSOLE_PORT}"
 Restart=always
 LimitNOFILE=65536
 
