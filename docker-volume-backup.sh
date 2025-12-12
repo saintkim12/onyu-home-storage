@@ -15,9 +15,11 @@
 # chmod 600 /root/.ssh/authorized_keys
 # vi /etc/ssh/sshd_config
 # ```
-# PermitRootLogin yes
 # PubkeyAuthentication yes
-# PasswordAuthentication no
+# PasswordAuthentication yes
+# Match User root
+#    PasswordAuthentication no
+#    PermitRootLogin yes
 # ```
 # rc-service sshd restart
 ## 선작업 내용(13, 17)
