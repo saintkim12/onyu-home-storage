@@ -1,4 +1,5 @@
 #!/bin/bash
+umask 0022
 # -------------------------------------------------------------
 # Restic backup script for Immich
 # 실행 서버: 15번 서버 (raspberrypi)

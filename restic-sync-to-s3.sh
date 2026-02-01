@@ -1,4 +1,5 @@
 #!/bin/bash
+umask 0022
 # -------------------------------------------------------------
 # Restic repository sync to AWS S3 script
 # 실행 서버: 15번 서버 (raspberrypi)
@@ -8,6 +9,9 @@
 # 크론탭: $USER 사용자로 실행
 # -------------------------------------------------------------
 # /usr/local/bin/restic-sync-to-s3.sh
+
+# 명령어 경로
+MC="/usr/local/bin/mc"
 
 # restic 저장소 경로
 RESTIC_REPO="/mnt/exthdd02/immich-archive-restic/restic"
@@ -35,7 +39,7 @@ echo "[$START_TIME] --> Starting sync of restic repository to S3" >> "$SUMMARY_L
 # mc mirror 실행
 # --storage-class DEEP_ARCHIVE: Glacier Deep Archive 사용
 # --remove: 소스에 없는 파일은 대상에서 삭제 (동기화)
-mc mirror \
+$MC mirror \
     --storage-class "DEEP_ARCHIVE" \
     --remove \
     "$RESTIC_REPO" \
